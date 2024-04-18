@@ -5,6 +5,7 @@ import NotFound from "./views/NotFound";
 import DefaultLayout from "./components/DefaultLayout";
 import GuestLayout from "./components/GuestLayout";
 import Conferences from "./views/Conferences";
+import ConferenceForm from "./views/ConferenceForm";
 
 const router = createBrowserRouter([
     {
@@ -18,6 +19,14 @@ const router = createBrowserRouter([
             {
                 path: "/conferences",
                 element: <Conferences />,
+            },
+            {
+                path: "/conferences/new",
+                element: <ConferenceForm key="create" />,
+            },
+            {
+                path: "/conferences/:id",
+                element: <ConferenceForm key="update" />,
             },
         ],
     },
