@@ -13,10 +13,15 @@ export default function DefaultLayout() {
     const onLogout = (e) => {
         e.preventDefault();
 
-        ServerClient.post("/logout").then(() => {
-            setUser({});
+        if (token === "guest") {
             setToken(null);
-        });
+            setUser(null);
+        } else {
+            ServerClient.post("/logout").then(() => {
+                setUser({});
+                setToken(null);
+            });
+        }
     };
 
     useEffect(() => {

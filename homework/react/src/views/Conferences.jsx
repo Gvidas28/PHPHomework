@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import ServerClient from "../ServerClient";
 import { Link } from "react-router-dom";
+import { useStateContext } from "../ContextProvider";
 
 export default function Conferences() {
     const [conferences, setConferences] = useState([]);
     const [loading, setLoading] = useState(false);
+
+    const { token } = useStateContext();
 
     useEffect(() => {
         getConferences();
@@ -45,9 +48,11 @@ export default function Conferences() {
                 }}
             >
                 <h1>Conferences</h1>
-                <Link to={"/conferences/new"} className="btn-add">
-                    Create new
-                </Link>
+                {token !== "guest" && (
+                    <Link to={"/conferences/new"} className="btn-add">
+                        Create new
+                    </Link>
+                )}
             </div>
             <div className="card">
                 <table>
@@ -78,21 +83,24 @@ export default function Conferences() {
                                 <td>{c.description}</td>
                                 <td>{c.location}</td>
                                 <td>{c.date}</td>
-                                <td>
-                                    <Link
-                                        to={"/conferences/" + c.id}
-                                        className="btn-edit"
-                                    >
-                                        Edit
-                                    </Link>
-                                    &nbsp;
-                                    <button
-                                        className="btn-delete"
-                                        onClick={(e) => onDelete(c)}
-                                    >
-                                        Delete
-                                    </button>
-                                </td>
+                                {token !== "guest" && (
+                                    <td>
+                                        <Link
+                                            to={"/conferences/" + c.id}
+                                            className="btn-edit"
+                                        >
+                                            Edit
+                                        </Link>
+                                        &nbsp;
+                                        <button
+                                            className="btn-delete"
+                                            onClick={(e) => onDelete(c)}
+                                        >
+                                            Delete
+                                        </button>
+                                    </td>
+                                )}
+                                {token === "guest" && <td></td>}
                             </tr>
                         ))}
                     </tbody>

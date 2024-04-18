@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ServerClient from "../ServerClient";
 import { useStateContext } from "../ContextProvider";
 
@@ -36,6 +36,13 @@ export default function Login() {
             });
     };
 
+    const onGuestLogin = (e) => {
+        e.preventDefault();
+
+        setToken("guest");
+        setUser({ name: "Guest" });
+    };
+
     return (
         <div className="login-signup-form">
             <div className="form">
@@ -62,6 +69,12 @@ export default function Login() {
                     <p className="message">
                         Not registered?
                         <Link to="/register"> Register</Link>
+                    </p>
+                    <p className="message">
+                        Or view page as a
+                        <a href="#" onClick={onGuestLogin}>
+                            {" Guest"}
+                        </a>
                     </p>
                 </form>
             </div>
