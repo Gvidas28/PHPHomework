@@ -5,7 +5,7 @@ export default function GuestLayout() {
     const { token } = useStateContext();
 
     if (token) {
-        <Navigate to="/conferences" />;
+        return <Navigate to="/conferences" />;
     }
 
     return (
